@@ -36,11 +36,6 @@ export const reducer = (state = INITIAL_STATE, action) => {
                     accounts: updatedAccounts,
                 };
             }
-        // case actionTypes.EXPENSES:
-        //     return {
-        //         ...state,
-        //         expenses: state.expenses.concat(action.payload),
-        //     };
         case actionTypes.EXPENSES:
             return {
                 ...state,

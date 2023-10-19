@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
         marginRight: "auto",
         marginTop: 10,
         marginBottom: 10,
-        flex: 1,
     },
 });
 

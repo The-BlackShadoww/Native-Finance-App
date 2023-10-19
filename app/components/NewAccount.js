@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import {
     View,
-    Text,
-    SafeAreaView,
-    StyleSheet,
-    Platform,
     Button,
     TextInput,
+    StyleSheet,
+    Text,
+    SafeAreaView,
+    Platform,
 } from "react-native";
 import { connect } from "react-redux";
 import { buildAccount } from "../redux/actionCerator";
@@ -47,6 +47,7 @@ const NewAccount = (props) => {
 
     const createAccount = () => {
         props.buildAccount(name, initialValue, type);
+        showAlert();
 
         setAccountState({
             inputs: {
@@ -55,11 +56,13 @@ const NewAccount = (props) => {
                 type: "",
             },
         });
+    };
 
+    const showAlert = () => {
         if (props.isAccCreated) {
-            alert("Account Created");
+            alert("Account Created Successfully");
         } else {
-            alert("Failed to create account!!")
+            alert("Failed to create account!!");
         }
     };
 
@@ -70,12 +73,14 @@ const NewAccount = (props) => {
                     <TextInput
                         style={styles.input}
                         placeholder="Account Name"
+                        value={name}
                         onChangeText={(value) => updateInputs(value, "name")}
                     />
                     <TextInput
                         style={styles.input}
                         placeholder="Initial Value"
                         keyboardType="numeric"
+                        value={initialValue}
                         onChangeText={(value) =>
                             updateInputs(value, "initialValue")
                         }
@@ -83,6 +88,7 @@ const NewAccount = (props) => {
                     <TextInput
                         style={styles.input}
                         placeholder="Type"
+                        value={type}
                         onChangeText={(value) => updateInputs(value, "type")}
                     />
                 </View>
@@ -116,11 +122,11 @@ const styles = StyleSheet.create({
         marginRight: "auto",
         borderBottomWidth: 2,
         borderColor: "#000",
-        fontSize:30
+        fontSize: 30,
     },
     createBtn: {
-        width: 150,
-        marginTop: 20,
+        width: 180,
+        marginTop: 30,
     },
 });
 
