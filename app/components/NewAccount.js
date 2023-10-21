@@ -47,8 +47,8 @@ const NewAccount = (props) => {
 
     const createAccount = () => {
         props.buildAccount(name, initialValue, type);
-        showAlert();
 
+        showAlert();
         setAccountState({
             inputs: {
                 name: "",
@@ -66,6 +66,7 @@ const NewAccount = (props) => {
         }
     };
 
+
     return (
         <View style={styles.container}>
             <View>
@@ -78,7 +79,7 @@ const NewAccount = (props) => {
                     />
                     <TextInput
                         style={styles.input}
-                        placeholder="Initial Value"
+                        placeholder="Initial Amount"
                         keyboardType="numeric"
                         value={initialValue}
                         onChangeText={(value) =>
