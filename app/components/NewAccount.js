@@ -1,15 +1,8 @@
 import React, { useState } from "react";
-import {
-    View,
-    Button,
-    TextInput,
-    StyleSheet,
-    Text,
-    SafeAreaView,
-    Platform,
-} from "react-native";
+import { View, Button, TextInput, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { buildAccount } from "../redux/actionCerator";
+import { useNavigation } from "@react-navigation/native";
 
 const mapStateToProps = (state) => {
     return {
@@ -25,6 +18,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const NewAccount = (props) => {
+    const navigation = useNavigation();
     const [accountState, setAccountState] = useState({
         inputs: {
             name: "",
@@ -48,7 +42,6 @@ const NewAccount = (props) => {
     const createAccount = () => {
         props.buildAccount(name, initialValue, type);
 
-        showAlert();
         setAccountState({
             inputs: {
                 name: "",
@@ -56,16 +49,9 @@ const NewAccount = (props) => {
                 type: "",
             },
         });
-    };
 
-    const showAlert = () => {
-        if (props.isAccCreated) {
-            alert("Account Created Successfully");
-        } else {
-            alert("Failed to create account!!");
-        }
+        navigation.navigate("Home");
     };
-
 
     return (
         <View style={styles.container}>

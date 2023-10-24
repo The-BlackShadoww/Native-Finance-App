@@ -1,24 +1,8 @@
 import React, { useState } from "react";
-import {
-    View,
-    Text,
-    Button,
-    FlatList,
-    TextInput,
-    Platform,
-    StyleSheet,
-    SafeAreaView,
-    TouchableOpacity,
-    TouchableHighlight,
-} from "react-native";
-import IncomeScreen from "./IncomeScreen";
-import ExpenseScreen from "./ExpenseScreen";
-import { AntDesign } from "@expo/vector-icons";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { View, Text, Button, TextInput, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
-import { Income } from "../redux/actionCerator";
-import { Expense } from "../redux/actionCerator";
+import { Income, Expense } from "../redux/actionCerator";
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -27,13 +11,11 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-const Tab = createBottomTabNavigator();
-
 const Calculation = (props) => {
-    const { account } = props.route.params;
+    const { account } = props.route.params || {};
     const navigation = useNavigation();
 
-    const [amount, setAmount] = useState(0);
+    const [amount, setAmount] = useState(null);
 
     const onChange = (value) => {
         setAmount(value);
@@ -59,37 +41,53 @@ const Calculation = (props) => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.accView}>
-                <Text style={styles.accInfo}>Account Name: {account.name}</Text>
-                <Text style={styles.accInfo}>Balance: {account.amount}$</Text>
-                {/* <Text style={styles.accInfo}>id: {account.id}</Text> */}
-            </View>
-            {/* Calculation */}
-            <View>
-                <TextInput
-                    placeholder="0"
-                    keyboardType="numeric"
-                    style={styles.input}
-                    value={amount}
-                    onChangeText={(value) => onChange(value)}
-                />
-            </View>
-            <View style={styles.view}>
-                <View style={styles.Btn}>
-                    <Button
-                        title="Income"
-                        onPress={calcIncome}
-                        color="green"
-                    ></Button>
+            {account ? (
+                <View>
+                    <View style={styles.accView}>
+                        <Text style={styles.accInfo}>
+                            Account Name: {account.name}
+                        </Text>
+                        <Text style={styles.accInfo}>
+                            Balance: {account.amount}$
+                        </Text>
+                    </View>
+                    <View>
+                        <TextInput
+                            placeholder="0"
+                            keyboardType="numeric"
+                            style={styles.input}
+                            value={amount}
+                            onChangeText={(value) => onChange(value)}
+                        />
+                    </View>
+                    <View style={styles.view}>
+                        <View style={styles.Btn}>
+                            <Button
+                                title="Income"
+                                onPress={calcIncome}
+                                color="green"
+                            ></Button>
+                        </View>
+                        <View style={styles.Btn}>
+                            <Button
+                                title="expense"
+                                onPress={calcExpense}
+                                color="red"
+                            ></Button>
+                        </View>
+                    </View>
                 </View>
-                <View style={styles.Btn}>
-                    <Button
-                        title="expense"
-                        onPress={calcExpense}
-                        color="red"
-                    ></Button>
-                </View>
-            </View>
+            ) : (
+                <Text
+                    style={{
+                        fontSize: 25,
+                        fontWeight: "500",
+                        alignSelf: "center",
+                    }}
+                >
+                    Select an account first
+                </Text>
+            )}
         </View>
     );
 };
